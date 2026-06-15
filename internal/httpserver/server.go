@@ -24,6 +24,15 @@ func New(cfg config.Config, store storage.URLStore) *Server {
 
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:5173", "http://127.0.0.1:5173"},
+		AllowMethods: []string{
+			http.MethodGet,
+			http.MethodPost,
+			http.MethodOptions,
+		},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 
 	urlHandler := handlers.NewURLHandler(cfg.BaseURL, store)
 	RegisterRoutes(e, urlHandler)

@@ -31,7 +31,14 @@ The project is written in Go and uses the Echo framework. Links are stored in Po
 |       `-- postgres.go
 |-- .env.example
 |-- go.mod
-`-- go.sum
+|-- go.sum
+`-- web
+    |-- src
+    |   |-- App.tsx
+    |   |-- main.tsx
+    |   `-- styles.css
+    |-- package.json
+    `-- vite.config.ts
 ```
 
 ## Requirements
@@ -86,6 +93,8 @@ SQL injection protection is handled by parameterized `pgx` queries. User input i
 
 ## Run
 
+Start the API:
+
 ```bash
 go run ./cmd/app
 ```
@@ -94,6 +103,29 @@ The API will be available at:
 
 ```text
 http://localhost:8080
+```
+
+Start the React frontend:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+The website will be available at:
+
+```text
+http://127.0.0.1:5173
+```
+
+During development, Vite proxies `/api` and `/health` requests to `http://localhost:8080`.
+
+## Frontend Build
+
+```bash
+cd web
+npm run build
 ```
 
 ## API
